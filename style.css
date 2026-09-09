@@ -1,0 +1,221 @@
+* { box-sizing: border-box; }
+
+html, body {
+    height: 100%;
+}
+
+/* Fundo Animado e Colorido */
+body {
+    font-family: 'Baloo 2', cursive, sans-serif;
+    margin: 0;
+    padding: 12px;
+    text-align: center;
+
+    /* Seu fundo de tela incrível */
+    background-image: url('https://i.pinimg.com/originals/7a/69/74/7a6974bac9eff3e2ea5ddf267cd75483.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    color: white;
+    min-height: 100vh;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: stretch;
+    align-content: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Barra de Progresso e Títulos */
+.progresso-container {
+    width: 26px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    border: 3px solid white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.progresso-barra {
+    width: 100%;
+    height: 0%;
+    background-image: repeating-linear-gradient(135deg, #FFD700, #FFD700 12px, #FFC107 12px, #FFC107 24px);
+    transition: height 0.5s ease-in-out;
+    border-radius: 15px;
+    animation: moverListras 1s linear infinite;
+}
+
+@keyframes moverListras {
+    from { background-position: 0 0; }
+    to { background-position: 0 34px; }
+}
+
+h1 {
+    display: inline-block;
+    background: rgba(255,255,255,0.14);
+    border: 3px dashed rgba(255,255,255,0.65);
+    border-radius: 16px;
+    padding: 8px 24px;
+    color: #FFF;
+    font-size: clamp(22px, 4vh, 38px);
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin: 0 0 10px;
+}
+
+h2 {
+    display: inline-block;
+    background: white;
+    color: #FF6B6B;
+    border: 3px solid #FFD700;
+    border-radius: 16px;
+    padding: 4px 18px;
+    font-size: clamp(22px, 3.6vh, 34px);
+    margin: 0 0 14px;
+    text-shadow: none;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+    animation: pulseText 2s infinite;
+}
+
+@keyframes pulseText {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Área do Jogo e Grade de 6 presentes */
+.game-container {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 20px 24px;
+    width: min(1150px, 92vw);
+    max-height: 96vh;
+    border: 4px solid rgba(255,255,255,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estrelinhas decorativas nos cantos do card */
+.game-container::before,
+.game-container::after {
+    content: '⭐';
+    position: absolute;
+    font-size: 30px;
+    animation: brilhar 3s ease-in-out infinite;
+    pointer-events: none;
+}
+.game-container::before { top: -14px; left: -10px; }
+.game-container::after { top: -14px; right: -10px; content: '✨'; animation-delay: 0.5s; }
+
+@keyframes brilhar {
+    0%, 100% { transform: rotate(-8deg) scale(1); }
+    50% { transform: rotate(8deg) scale(1.2); }
+}
+
+.grid-opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2vh 2vw;
+    width: 100%;
+    padding: 6px;
+}
+
+/* --- A MÁGICA DO 3D --- */
+.cena {
+    width: 23vh;
+    height: 23vh;
+    max-width: 27vw;
+    aspect-ratio: 1 / 1;
+    perspective: 600px;
+    cursor: pointer;
+    animation: flutuarPresente 2.4s ease-in-out infinite;
+}
+
+.cena:nth-child(2) { animation-delay: 0.15s; }
+.cena:nth-child(3) { animation-delay: 0.3s; }
+.cena:nth-child(4) { animation-delay: 0.45s; }
+.cena:nth-child(5) { animation-delay: 0.6s; }
+.cena:nth-child(6) { animation-delay: 0.75s; }
+
+@keyframes flutuarPresente {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(-3deg); }
+}
+
+.cartao {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+.cartao.virado {
+    transform: rotateY(180deg);
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* FRENTE DA CARTA (O PRESENTE FECHADO) */
+.face-frente {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.face-frente img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Garante que as caixas de presente não cortem */
+    filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.5));
+    transition: transform 0.2s;
+}
+
+.cena:hover .face-frente img {
+    transform: scale(1.1); /* Zoom ao passar o mouse */
+}
+
+/* COSTAS DA CARTA (A REVELAÇÃO DO OBJETO) */
+.face-costas {
+    background-color: white;
+    border-radius: 25px;
+    border: 5px solid white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transform: rotateY(180deg);
+    color: #333;
+    overflow: hidden;
+}
+
+/* --- SOLUÇÃO DAS IMAGENS CORTADAS --- */
+.face-costas img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Faz a imagem do brinquedo caber inteira sem distorcer */
+    padding: 10px; /* Dá uma borda invisível para a imagem não colar no canto da carta */
+    box-sizing: border-box; /* Garante que o padding não quebre o formato do quadrado */
+}
+
+/* Mantém o texto de descrição invisível para deixar só a foto */
+.face-costas p {
+    display: none !important;
+}
